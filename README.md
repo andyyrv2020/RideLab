@@ -40,4 +40,6 @@ The goal is to turn raw sensor data into meaningful insights — from performanc
 ## 📊 Data Model
 ```text
 Bike(Id, Model, Year, EngineSize)
-ObdSession(Id, B
+ObdSession(Id, BikeId, StartedAt, EndedAt)
+ObdPoint(Id, SessionId, Timestamp, Rpm, CoolantTemp, Speed, Throttle)
+DtcCode(Code, Title, Severity, FixHints)
