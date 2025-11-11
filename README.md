@@ -1,45 +1,96 @@
 # 🏍️ RideLab  
-**Telemetry and tuning logbook for motorcycles (OBD-II + analytics)**  
-Built with **ASP.NET Core MVC**, **Entity Framework Core**, and **Chart.js**  
+**Телеметрия и тунинг логбук за мотоциклети (OBD-II + анализ)**  
+Изградено с **ASP.NET Core MVC**, **Entity Framework Core**, и **Chart.js**
 
 ---
 
-## 📖 Overview
-RideLab is a web-based telemetry and diagnostics platform for motorcycle enthusiasts.  
-It allows riders to **upload, visualize, and analyze data** recorded via OBD-II adapters (like ELM327).  
-The goal is to turn raw sensor data into meaningful insights — from performance monitoring to maintenance planning.
+## 📖 Описание
+RideLab е уеб базирана платформа за телеметрия и диагностика на мотоциклети.  
+Приложението позволява на мотористи да **качват, визуализират и анализират данни**, записани чрез OBD-II адаптери (като ELM327).  
+Основната цел е суровите телеметрични данни да се превърнат в полезна информация за работа на двигателя, поддръжка и тунинг.
 
 ---
 
-## 🚀 Features
-- **OBD Session Upload:** Upload CSV/JSON logs from your mobile OBD app.  
-- **Charts & Insights:** Interactive visualizations (RPM, temperature, speed).  
-- **DTC Codes:** Detect and explain diagnostic trouble codes.  
-- **Service Planner:** Predict next oil/filter replacement based on riding data.  
-- **Compare Runs:** Compare two rides (e.g., temperature vs. speed).  
-- **(Optional)** Live telemetry via SignalR and background analytics via Hangfire.  
+## 🚀 Основни функционалности
+- **Качване на OBD сесия:** Импорт на CSV/JSON логове от мобилно OBD приложение  
+- **Графики и анализи:** Интерактивна визуализация на данни (обороти, температура, скорост)  
+- **DTC кодове:** Откриване и обяснение на диагностични грешки  
+- **Сервизен план:** Прогноза за следваща смяна на консумативи според натоварването  
+- **Сравнение на сесии:** Сравнение на две различни карания по избрани параметри  
+- *(По избор)* SignalR стрийминг и Hangfire анализи във фонов режим  
 
 ---
 
-## 🧱 Technologies
-- **Backend:** ASP.NET Core MVC, C#, Entity Framework Core  
-- **Frontend:** Bootstrap 5, Chart.js  
-- **Database:** SQL Server  
-- **AI Tools Used:** ChatGPT (GPT-5), OpenAI Codex, GitHub Copilot, DALL·E  
+## 🧱 Използвани технологии
+- **Back-end:** ASP.NET Core MVC, C#, Entity Framework Core  
+- **Front-end:** Bootstrap 5, Chart.js  
+- **База данни:** SQL Server  
+- **GenAI инструменти:** ChatGPT (GPT-5), OpenAI Codex, GitHub Copilot, DALL·E  
 
 ---
 
-## 🧠 How it Works
-1. The user logs in and uploads a telemetry file (`.csv` or `.json`).  
-2. The backend parses the file and stores OBD points in the database.  
-3. The system visualizes key metrics and detects anomalies (misfires, overheating).  
-4. Optional background tasks calculate maintenance predictions.  
+## ⚙️ Как работи
+1. Потребителят влиза в системата и качва CSV или JSON файл с телеметрични данни.  
+2. Сървърът парсва файла и записва OBD точките в базата данни чрез EF Core.  
+3. Системата визуализира параметрите и засича аномалии (напр. прегряване или нестабилни обороти).  
+4. Фонови задачи (Hangfire) могат да изчисляват прогнози за следващи сервизни дейности.
 
 ---
 
-## 📊 Data Model
+## 📊 Модели на данни
 ```text
 Bike(Id, Model, Year, EngineSize)
 ObdSession(Id, BikeId, StartedAt, EndedAt)
 ObdPoint(Id, SessionId, Timestamp, Rpm, CoolantTemp, Speed, Throttle)
 DtcCode(Code, Title, Severity, FixHints)
+Връзки:
+
+Един Bike → много ObdSessions
+
+Една ObdSession → много ObdPoints
+
+📈 Примерни визуализации
+Линейна графика на обороти и температура (Chart.js)
+
+Таблица с диагностични кодове и препоръки
+
+Сравнение на две различни карания
+
+Диаграма с прогноза за следващо обслужване
+
+🤖 Използване на GenAI при разработката
+RideLab е създаден с помощта на инструменти с изкуствен интелект (GenAI):
+
+ChatGPT: помощ при архитектура, дебъг и обяснение на грешки
+
+OpenAI Codex: генериране на примерни C# методи (парсинг, качване)
+
+GitHub Copilot: предложения при писане на код
+
+DALL·E / Mermaid: генериране на диаграми и визуални материали
+
+🔧 Инструкции за стартиране
+Клонирай репозиторито:
+
+bash
+Copy code
+git clone https://github.com/andyyrv2020/RideLab.git
+Обнови връзката към базата данни в appsettings.json
+
+Стартирай миграциите:
+
+bash
+Copy code
+dotnet ef database update
+Стартирай приложението:
+
+bash
+Copy code
+dotnet run
+Отвори в браузъра: https://localhost:5001
+
+👤 Автор
+Андрей Рашев
+Бакалавър, Пловдивски университет „Паисий Хилендарски“
+
+Курсова работа по тема: „Използване на GenAI в програмирането“ (2025)
